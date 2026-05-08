@@ -1,7 +1,7 @@
 import UIKit
 
 struct QuizQuestion {
-    let image: String
+    let imageName: String
     let text: String
     let correctAnswer: Bool
 }
@@ -13,48 +13,50 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var textLabel: UILabel!
     @IBOutlet private var counterLabel: UILabel!
-
+    @IBOutlet private var noButton: UIButton!
+    @IBOutlet private var yesButton: UIButton!
+    
     // MARK: - Private Properties
 
     private let questions: [QuizQuestion] = [
         QuizQuestion(
-            image: "The Godfather",
+            imageName: "The Godfather",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: true),
         QuizQuestion(
-            image: "The Dark Knight",
+            imageName: "The Dark Knight",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: true),
         QuizQuestion(
-            image: "Kill Bill",
+            imageName: "Kill Bill",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: true),
         QuizQuestion(
-            image: "The Avengers",
+            imageName: "The Avengers",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: true),
         QuizQuestion(
-            image: "Deadpool",
+            imageName: "Deadpool",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: true),
         QuizQuestion(
-            image: "The Green Knight",
+            imageName: "The Green Knight",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: true),
         QuizQuestion(
-            image: "Old",
+            imageName: "Old",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: false),
         QuizQuestion(
-            image: "The Ice Age Adventures of Buck Wild",
+            imageName: "The Ice Age Adventures of Buck Wild",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: false),
         QuizQuestion(
-            image: "Tesla",
+            imageName: "Tesla",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: false),
         QuizQuestion(
-            image: "Vivarium",
+            imageName: "Vivarium",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: false)
     ]
@@ -65,6 +67,8 @@ final class MovieQuizViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        imageView.layer.cornerRadius = 20
+        imageView.layer.masksToBounds = true
         show(quiz: convert(model: questions[currentQuestionIndex]))
     }
 
@@ -81,7 +85,7 @@ final class MovieQuizViewController: UIViewController {
     // MARK: - Private Methods
 
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
-        return QuizStepViewModel(image: UIImage(named: model.image) ?? UIImage(), question: model.text, questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)")
+        QuizStepViewModel(image: UIImage(named: model.imageName) ?? UIImage(), question: model.text, questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)")
     }
 
     private func show(quiz step: QuizStepViewModel) {
@@ -101,16 +105,18 @@ final class MovieQuizViewController: UIViewController {
             show(quiz: convert(model: questions[currentQuestionIndex]))
         }
         alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
 
     private func showAnswerResult(isCorrect: Bool) {
-        imageView.layer.masksToBounds = true
+        yesButton.isEnabled = false
+        noButton.isEnabled = false
         imageView.layer.borderWidth = 8
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
         correctAnswers += isCorrect ? 1 : 0
-        imageView.layer.cornerRadius = 20
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
+            yesButton.isEnabled = true
+            noButton.isEnabled = true
             imageView.layer.borderWidth = 0
             showNextQuestionOrResults()
         }
