@@ -17,6 +17,7 @@ final class MovieQuizViewController: UIViewController {
     private let questionFactory: QuestionFactoryProtocol = QuestionFactory()
     private var currentQuestion: QuizQuestion?
     private var statisticService: StatisticServiceProtocol!
+    private lazy var resultAlertPresenter = ResultAlertPresenter(viewController: self)
 
     // MARK: - Lifecycle
 
@@ -67,18 +68,17 @@ final class MovieQuizViewController: UIViewController {
     }
 
     private func show(quiz result: QuizResultsViewModel) {
-        let alert = UIAlertController(
+        let alertModel = AlertModel(
             title: result.title,
             message: result.text,
-            preferredStyle: .alert)
-        let action = UIAlertAction(title: result.buttonText, style: .default) { [weak self] _ in
-            guard let self = self else { return }
-            currentQuestionIndex = 0
-            correctAnswers = 0
-            showNextQuestion()
-        }
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
+            buttonText: result.buttonText,
+            completion: { [weak self] in
+                guard let self = self else { return }
+                currentQuestionIndex = 0
+                correctAnswers = 0
+                showNextQuestion()
+            })
+        resultAlertPresenter.show(model: alertModel)
     }
 
     private func showAnswerResult(isCorrect: Bool) {
