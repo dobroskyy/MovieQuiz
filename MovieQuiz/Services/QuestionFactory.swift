@@ -14,6 +14,17 @@ final class QuestionFactory: QuestionFactoryProtocol {
 
     private var movies: [MostPopularMovie] = []
 
+    private enum LoadDataError: Error, LocalizedError {
+        case serverError(String)
+
+        var errorDescription: String? {
+            switch self {
+            case .serverError(let message):
+                return message
+            }
+        }
+    }
+
     init(moviesLoader: MoviesLoading, delegate: QuestionFactoryDelegate?) {
         self.moviesLoader = moviesLoader
         self.delegate = delegate
@@ -40,10 +51,21 @@ final class QuestionFactory: QuestionFactoryProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let mostPopularMovies):
+                // Сервер может ответить HTTP 200, но с ошибкой в теле (например, неверный ключ)
+                guard mostPopularMovies.errorMessage.isEmpty else {
+                    DispatchQueue.main.async {
+                        self.delegate?.didFailToLoadData(with: LoadDataError.serverError(mostPopularMovies.errorMessage))
+                    }
+                    return
+                }
                 self.movies = mostPopularMovies.items       // сохраняем фильмы в переменную
-                self.delegate?.didLoadDataFromServer()       // сообщаем, что данные загружены
+                DispatchQueue.main.async {
+                    self.delegate?.didLoadDataFromServer()   // сообщаем, что данные загружены (в главном потоке)
+                }
             case .failure(let error):
-                self.delegate?.didFailToLoadData(with: error) // сообщаем об ошибке
+                DispatchQueue.main.async {
+                    self.delegate?.didFailToLoadData(with: error) // сообщаем об ошибке (в главном потоке)
+                }
             }
         }
     }
