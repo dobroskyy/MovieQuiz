@@ -17,8 +17,10 @@ struct MoviesLoader: MoviesLoading {
 
     // MARK: - URL
     private var mostPopularMoviesUrl: URL {
-        // Если мы не смогли преобразовать строку в URL, то приложение упадёт с ошибкой
-        guard let url = URL(string: "https://tv-api.com/en/API/Top250Movies/k_zcuw1ytf") else {
+        // Учебный ключ IMDb-API (tv-api.com) больше не работает — сервис стал платным.
+        // Поэтому список топ-250 берём из снимка данных tv-api.com, размещённого в репозитории проекта,
+        // и загружаем его тем же сетевым запросом. Формат JSON полностью совпадает с ответом API.
+        guard let url = URL(string: "https://raw.githubusercontent.com/dobroskyy/MovieQuiz/sprint_06/Top250Movies.json") else {
             preconditionFailure("Unable to construct mostPopularMoviesUrl")
         }
         return url
