@@ -5,11 +5,11 @@
 //  Created by Максим on 28.05.2026.
 //
 
-import Foundation
+import UIKit
 
 final class QuestionFactory: QuestionFactoryProtocol {
 
-    private let moviesLoader: MoviesLoading
+    private let moviesLoader: MoviesLoaderProtocol
     private weak var delegate: QuestionFactoryDelegate?
 
     private var movies: [MostPopularMovie] = []
@@ -25,26 +25,10 @@ final class QuestionFactory: QuestionFactoryProtocol {
         }
     }
 
-    init(moviesLoader: MoviesLoading, delegate: QuestionFactoryDelegate?) {
+    init(moviesLoader: MoviesLoaderProtocol, delegate: QuestionFactoryDelegate?) {
         self.moviesLoader = moviesLoader
         self.delegate = delegate
     }
-
-    // Mock-данные из прошлого спринта — пригодятся позже, поэтому закомментированы.
-    /*
-    private let questions: [QuizQuestion] = [
-        QuizQuestion(imageName: "The Godfather", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-        QuizQuestion(imageName: "The Dark Knight", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-        QuizQuestion(imageName: "Kill Bill", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-        QuizQuestion(imageName: "The Avengers", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-        QuizQuestion(imageName: "Deadpool", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-        QuizQuestion(imageName: "The Green Knight", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-        QuizQuestion(imageName: "Old", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-        QuizQuestion(imageName: "The Ice Age Adventures of Buck Wild", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-        QuizQuestion(imageName: "Tesla", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-        QuizQuestion(imageName: "Vivarium", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false)
-    ]
-    */
 
     func loadData() {
         moviesLoader.loadMovies { [weak self] result in
@@ -83,6 +67,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
                 imageData = try Data(contentsOf: movie.resizedImageURL)
             } catch {
                 print("Failed to load image")
+                imageData = UIImage(named: "placeholder")?.pngData() ?? Data()
             }
 
             let rating = Float(movie.rating) ?? 0
