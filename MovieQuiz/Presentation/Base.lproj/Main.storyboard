@@ -39,6 +39,7 @@
                                                 <fontDescription key="fontDescription" name="YSDisplay-Medium" family="YS Display" pointSize="20"/>
                                                 <color key="textColor" name="YP White"/>
                                                 <nil key="highlightedColor"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="Index"/>
                                             </label>
                                         </subviews>
                                     </stackView>
@@ -48,6 +49,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="j78-Zu-YKf" secondAttribute="height" multiplier="2:3" priority="750" id="sRv-yB-FjJ"/>
                                         </constraints>
+                                        <accessibility key="accessibilityConfiguration" identifier="Poster"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Рейтинг этого фильма меньше, чем 5?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5I-oZ-yXP" userLabel="Question Label">
                                         <rect key="frame" x="0.0" y="647" width="400" height="27"/>
@@ -74,6 +76,7 @@
                                                         <integer key="value" value="15"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <accessibility key="accessibilityConfiguration" identifier="No"/>
                                                 <connections>
                                                     <action selector="noButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="HDD-Qn-j47"/>
                                                 </connections>
@@ -94,6 +97,7 @@
                                                         <integer key="value" value="15"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <accessibility key="accessibilityConfiguration" identifier="Yes"/>
                                                 <connections>
                                                     <action selector="yesButtonClicked" destination="BYZ-38-t0r" eventType="touchUpInside" id="l2P-nh-ivK"/>
                                                 </connections>

@@ -72,7 +72,8 @@ final class MovieQuizViewController: UIViewController {
                 currentQuestionIndex = 0
                 correctAnswers = 0
                 questionFactory?.requestNextQuestion()
-            })
+            },
+            accessibilityIdentifier: "Game results")
         resultAlertPresenter.show(model: alertModel)
     }
 
@@ -136,7 +137,8 @@ final class MovieQuizViewController: UIViewController {
                 currentQuestionIndex = 0
                 correctAnswers = 0
                 questionFactory?.requestNextQuestion()
-            })
+            },
+            accessibilityIdentifier: "Network error")
         resultAlertPresenter.show(model: model)
     }
 }
