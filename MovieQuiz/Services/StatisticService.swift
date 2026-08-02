@@ -1,10 +1,3 @@
-//
-//  StatisticService.swift
-//  MovieQuiz
-//
-//  Created by Максим on 21.07.2026.
-//
-
 import Foundation
 
 final class StatisticService: StatisticServiceProtocol {
@@ -21,7 +14,6 @@ final class StatisticService: StatisticServiceProtocol {
     }
 
     var totalAccuracy: Double {
-        // отношение общего числа правильных ответов ко всем заданным вопросам за все игры, в процентах
         totalQuestionsAsked > 0 ? Double(totalCorrectAnswers) / Double(totalQuestionsAsked) * 100 : 0
     }
 
@@ -51,7 +43,7 @@ final class StatisticService: StatisticServiceProtocol {
             storage.set(newValue, forKey: Keys.totalQuestionsAsked.rawValue)
         }
     }
-    
+
     var bestGame: GameResult {
         get {
             let correct = storage.integer(forKey: Keys.bestGameCorrect.rawValue)
@@ -65,7 +57,7 @@ final class StatisticService: StatisticServiceProtocol {
             storage.set(newValue.date, forKey: Keys.bestGameDate.rawValue)
         }
     }
-    
+
     func store(correct count: Int, total amount: Int) {
         gamesCount += 1
         totalCorrectAnswers += count
@@ -76,6 +68,5 @@ final class StatisticService: StatisticServiceProtocol {
             bestGame = currentGame
         }
     }
-    
-    
+
 }

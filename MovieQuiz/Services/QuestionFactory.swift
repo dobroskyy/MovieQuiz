@@ -1,10 +1,3 @@
-//
-//  QuestionFactory.swift
-//  MovieQuiz
-//
-//  Created by Максим on 28.05.2026.
-//
-
 import UIKit
 
 final class QuestionFactory: QuestionFactoryProtocol {
@@ -35,20 +28,19 @@ final class QuestionFactory: QuestionFactoryProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let mostPopularMovies):
-                // Сервер может ответить HTTP 200, но с ошибкой в теле (например, неверный ключ)
                 guard mostPopularMovies.errorMessage.isEmpty else {
                     DispatchQueue.main.async {
                         self.delegate?.didFailToLoadData(with: LoadDataError.serverError(mostPopularMovies.errorMessage))
                     }
                     return
                 }
-                self.movies = mostPopularMovies.items       // сохраняем фильмы в переменную
+                self.movies = mostPopularMovies.items
                 DispatchQueue.main.async {
-                    self.delegate?.didLoadDataFromServer()   // сообщаем, что данные загружены (в главном потоке)
+                    self.delegate?.didLoadDataFromServer()
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.delegate?.didFailToLoadData(with: error) // сообщаем об ошибке (в главном потоке)
+                    self.delegate?.didFailToLoadData(with: error)
                 }
             }
         }

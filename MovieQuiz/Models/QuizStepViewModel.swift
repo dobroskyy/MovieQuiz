@@ -1,14 +1,7 @@
-//
-//  QuizStepViewModel.swift
-//  MovieQuiz
-//
-//  Created by Максим on 02.05.2026.
-//
-
-import UIKit
+import Foundation
 
 struct QuizStepViewModel {
-  let image: UIImage
-  let question: String
-  let questionNumber: String
+    let image: Data
+    let question: String
+    let questionNumber: String
 }

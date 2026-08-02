@@ -1,16 +1,9 @@
-//
-//  StubNetworkClient.swift
-//  MovieQuizTests
-//
-//  Created by Максим on 02.08.2026.
-//
-
 import Foundation
 @testable import MovieQuiz
 
 struct StubNetworkClient: NetworkRouting {
 
-    enum TestError: Error { // тестовая ошибка
+    enum TestError: Error {
         case test
     }
 

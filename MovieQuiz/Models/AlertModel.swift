@@ -1,10 +1,3 @@
-//
-//  AlertModel.swift
-//  MovieQuiz
-//
-//  Created by Максим on 22.07.2026.
-//
-
 import Foundation
 
 struct AlertModel {

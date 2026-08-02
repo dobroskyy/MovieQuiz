@@ -1,10 +1,3 @@
-//
-//  MoviesLoader.swift
-//  MovieQuiz
-//
-//  Created by Максим on 22.07.2026.
-//
-
 import Foundation
 
 protocol MoviesLoaderProtocol {
@@ -21,9 +14,6 @@ struct MoviesLoader: MoviesLoaderProtocol {
 
     // MARK: - URL
     private var mostPopularMoviesUrl: URL {
-        // Учебный ключ IMDb-API (tv-api.com) больше не работает — сервис стал платным.
-        // Поэтому список топ-250 берём из снимка данных tv-api.com, размещённого в репозитории проекта,
-        // и загружаем его тем же сетевым запросом. Формат JSON полностью совпадает с ответом API.
         guard let url = URL(string: "https://raw.githubusercontent.com/dobroskyy/MovieQuiz/main/Top250Movies.json") else {
             preconditionFailure("Unable to construct mostPopularMoviesUrl")
         }

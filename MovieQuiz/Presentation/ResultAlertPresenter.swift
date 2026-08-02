@@ -1,10 +1,3 @@
-//
-//  ResultAlertPresenter.swift
-//  MovieQuiz
-//
-//  Created by Максим on 22.07.2026.
-//
-
 import UIKit
 
 final class ResultAlertPresenter {
